@@ -52,7 +52,7 @@ public class WeatherStationController
 		//SQLContext sqlContext =  createSqlContext();
 		 DataFrame df =  sqlContext.read().text("/user/ndulam/weather_raw/");
 		 JavaRDD<Row> withFileNameJavaRDD =  df.select(org.apache.spark.sql.functions.input_file_name().alias("filename"),df.col("value")).javaRDD();
-/*
+
 		 JavaRDD<WeatherDetails> weatherJavaRDD =  withFileNameJavaRDD.map(new Function<Row, WeatherDetails>()
 		 {
 	
@@ -104,7 +104,7 @@ public class WeatherStationController
 		 		 
 		 //repartition to create 10 files and write as parquet file
 		 weatherDF.repartition(10) .write().mode(SaveMode.Overwrite).parquet("/user/ndulam/weather_refined_parq/as_of_date="+date);
-		*/
+		
 		 DataFrame weatheTableDF =  sqlContext.parquetFile("/user/ndulam/weather_refined_parq");
 		 
 		 weatheTableDF.persist(StorageLevel.MEMORY_AND_DISK());
